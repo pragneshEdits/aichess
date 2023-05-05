@@ -1,0 +1,196 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Chess AI</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/multithread/multithread.js"></script>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  
+  <section id="mai" class="pane">
+    <h1>Chess Game</h1>
+  </section>
+
+  <model-viewer class="modal" src="./scene.gltf" alt="A 3D model of a chess" shadow-intensity="1" camera-controls auto-rotate ar >
+  </model-viewer>
+
+  <script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
+
+  <script nomodule
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js">
+  </script>
+
+<section id="mai" class="buttonn">
+  <img src="./images/butt.png" class="back" onclick="pass()">
+</section>
+
+
+<div id = 'main'>
+  <div class='statusdiv'><p id='status'>Your turn...</p></div>
+  <div style="float:right">
+    <button class="restartt" onclick="startGame()">Reset game</button><p/>
+  </div>
+
+  <div id = 'chessdiv'>
+    <table id='chessboard'></table>
+  </div>
+</div>
+
+<div style="margin-left: 20%;margin-top: 5%;" id="selection">
+
+  <h1>CHOOSE GAME LEVEL!</h1>
+  <b style="font-family: 'Oswald', sans-serif;">Difficulty:</b><br/>
+
+  <input  type="radio" id="option1" name="difficulty" value="2" class="my-input">
+  <label for="option1">Easy (depth = 2)</label>
+
+  <input  type="radio" name="difficulty" value="3" checked="true" class="my-input" id="option2">
+  <label for="option2"> Moderate (depth = 3)</label>
+
+
+  <input  type="radio" id="option3" name="difficulty" value="4" class="my-input">
+  <label for="option3"> Hard (depth = 4)</label>
+
+
+  <input  type="radio" id="option4" name="difficulty" value="5" class="my-input"> 
+  <label for="option4">Very hard (depth = 5) </label>
+
+
+  <input  type="radio" id="option5" name="difficulty" value="6" class="my-input"> 
+  <label for="option5">Ultra hard (depth = 6)</label>
+
+
+  <input  type="radio" id="option6" name="difficulty" value="7" class="my-input">
+    <label for="option6">Mega hard (depth = 7)</label>
+
+
+  <b style="font-family: 'Oswald', sans-serif;">Background:</b><br/>
+
+  <input  type="radio" id="option7" name="backgroundmode" value="0" class="my-input">
+  <label for="option7">Default</label>
+
+
+  <input  type="radio" id="option8" name="backgroundmode" value="1" checked="true" class="my-input"> 
+    <label for="option8">Night mode</label>
+  
+</div>
+
+<section id="mainn" class="buttonn2">
+  <img src="./images/butt.png" class="back2" onclick="pass2()">
+</section>
+
+<section id="mainn" class="buttonn3">
+  <img src="./images/goback.png" class="back3" width="50px" height="150px" onclick="pass3()">
+</section>
+
+<div style="float:right">
+  <button class="restartt2" id="playermove" onclick="playermoves()">View Your Moves</button><p/>
+</div>
+
+<div id="resultt" class="boxshape">
+  <b>Game Moves Record:</b><br/>
+  <textarea rows="20" cols="40" id ='moveLog'></textarea>
+</div>
+
+<section id="mainn" class="buttonn4">
+  <img src="./images/goback.png" class="back4" width="50px" height="190px" onclick="gameon2()">
+</section>
+
+  <script src="js/chessboard.js"></script>
+  <script src="js/index.js"></script>
+
+  <script>
+      var clickImage = document.querySelector('.pane');
+      var im = document.querySelector('.modal');
+      var but = document.querySelector('.buttonn');
+      var play = document.querySelector('.main');
+      var butt2 = document.querySelector('.buttonn2');
+      var butt3 = document.querySelector('.buttonn3');
+      var moves = document.querySelector('.playermove');
+      var butt4 = document.querySelector('.buttonn4');
+     
+      selection.style.display="none";
+      resultt.style.display="none";
+      butt2.style.display="none";
+      butt3.style.display="none";
+      playermove.style.display="none";
+      butt4.style.display="none";
+
+    function pass(){
+       
+        clickImage.remove();
+        im.remove();
+        but.remove();
+        
+        document.body.style.backgroundImage = "url('./images/pink.jpg')";
+
+        
+        main.style.display="none";
+        selection.style.display="block";
+        butt2.style.display="block";
+    }
+
+    function pass2(){
+      selection.style.display="none";
+
+      document.body.style.backgroundImage = "url('./images/chesss.jpg')";
+
+
+      butt2.style.display="none";
+      main.style.display="block";
+      butt3.style.display="block";
+      playermove.style.display="block";
+      butt4.style.display="none";
+    }
+
+    function pass3(){
+      selection.style.display="block";
+
+      document.body.style.backgroundImage = "url('./images/pink.jpg')";
+
+
+      butt2.style.display="block";
+      main.style.display="none";
+      butt3.style.display="none";
+      butt4.style.display="none";
+      playermove.style.display="none";
+    }
+
+    function playermoves(){
+
+
+      main.style.display="none";
+      butt3.style.display="none";
+      playermove.style.display="none";
+
+      resultt.style.display="block";
+      butt4.style.display="block";
+    }
+
+    function gameon2(){
+      main.style.display="block";
+      butt3.style.display="block";
+      playermove.style.display="block";
+
+      resultt.style.display="none";
+      butt4.style.display="none";
+    }
+    
+</script>
+</body>
+</html>
